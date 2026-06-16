@@ -233,6 +233,7 @@ position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_wqfne")
 animation = &"run"
 autoplay = "idle"
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=31480366]
 position = Vector2(0, -8)
@@ -252,9 +253,9 @@ idle_state = NodePath("../idle")
 jump_state = NodePath("../jump")
 metadata/_custom_type_script = "uid://7yk7kmaj2swm"
 
-[node name="idle" type="Node" parent="State_Machine" unique_id=1799406602 node_paths=PackedStringArray("move_state", "jump_state")]
+[node name="idle" type="Node" parent="State_Machine" unique_id=1799406602 node_paths=PackedStringArray("idle_state", "jump_state")]
 script = ExtResource("4_tuyoq")
-move_state = NodePath("../move")
+idle_state = NodePath("../move")
 jump_state = NodePath("../jump")
 metadata/_custom_type_script = "uid://7yk7kmaj2swm"
 
@@ -264,8 +265,4 @@ idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 metadata/_custom_type_script = "uid://7yk7kmaj2swm"
 
-[node name="Timer" type="Timer" parent="." unique_id=858560854]
-wait_time = 0.5
-
 [connection signal="animation_finished" from="AnimatedSprite2D" to="State_Machine/jump" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="timeout" from="Timer" to="State_Machine/move" method="_on_timer_timeout"]

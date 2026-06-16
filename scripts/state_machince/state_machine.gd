@@ -8,6 +8,7 @@ func _ready() -> void:
 	#loops through all the children states
 	for child_state: State in get_children():
 		child_state.switch_state.connect(change_state)
+	change_state(initial_state)
 
 
 func _process(delta: float) -> void:
