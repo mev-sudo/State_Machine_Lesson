@@ -241,27 +241,30 @@ shape = SubResource("CapsuleShape2D_wnwbv")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2143486895]
 zoom = Vector2(4, 4)
 
-[node name="State_Machine" type="Node" parent="." unique_id=1681315755 node_paths=PackedStringArray("initial_state")]
+[node name="State_Machine" type="Node" parent="." unique_id=1681315755 node_paths=PackedStringArray("starting_state")]
 script = ExtResource("3_dqkch")
-initial_state = NodePath("idle")
+starting_state = NodePath("idle")
 metadata/_custom_type_script = "uid://ccl2511i33ggg"
 
 [node name="move" type="Node" parent="State_Machine" unique_id=1805576514 node_paths=PackedStringArray("idle_state", "jump_state")]
 script = ExtResource("5_qlg0r")
 idle_state = NodePath("../idle")
 jump_state = NodePath("../jump")
+animation_name = "run"
 metadata/_custom_type_script = "uid://7yk7kmaj2swm"
 
-[node name="idle" type="Node" parent="State_Machine" unique_id=1799406602 node_paths=PackedStringArray("move_state", "jump_state")]
+[node name="idle" type="Node" parent="State_Machine" unique_id=1799406602 node_paths=PackedStringArray("jump_state", "move_state")]
 script = ExtResource("4_tuyoq")
-move_state = NodePath("../move")
 jump_state = NodePath("../jump")
+move_state = NodePath("../move")
+animation_name = "idle"
 metadata/_custom_type_script = "uid://7yk7kmaj2swm"
 
 [node name="jump" type="Node" parent="State_Machine" unique_id=1584101635 node_paths=PackedStringArray("idle_state", "move_state")]
 script = ExtResource("6_tuyoq")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
+animation_name = "roll"
 metadata/_custom_type_script = "uid://7yk7kmaj2swm"
 
 [node name="Timer" type="Timer" parent="." unique_id=858560854]

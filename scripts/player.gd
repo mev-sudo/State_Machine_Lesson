@@ -1,37 +1,21 @@
+# The player just delgeates any state-dependant logic to the state machine
+class_name Player
 extends CharacterBody2D
 
-@onready var animation: AnimatedSprite2D = $AnimatedSprite2D
-var speed = 200.0
-const JUMP_VELOCITY = -300.0
 
+@onready var animations = $AnimatedSprite2D
+@onready var state_machine = $State_Machine
 
+func _ready() -> void:
+	# Initialize the state machine, passing a reference of the player to the states,
+	# that way they can move and react accordingly
+	state_machine.init(self, animations)
+
+func _unhandled_input(event: InputEvent) -> void:
+	state_machine.process_input(event)
 
 func _physics_process(delta: float) -> void:
+	state_machine.process_physics(delta)
 
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
-
-	move_and_slide()
-	
-	#updates direction player is facing
-	if Input.get_axis("ui_left", "ui_right") >= 0:
-		animation.flip_h = false
-	else:
-		animation.flip_h = true
-	
-func boost (new_speed) ->void:
-	speed = new_speed
-		
+func _process(delta: float) -> void:
+	state_machine.process_frame(delta)

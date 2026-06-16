@@ -1,16 +1,23 @@
 extends State
 
-@export var move_state: State
+#States it can move to.
 @export var jump_state: State
+@export var move_state: State
 
-@onready var animation = $"../../AnimatedSprite2D"
+func enter() -> void:
+	#Super calls top level state.gd class enter function.
+	super()
+	parent.velocity.x = 0
 
-func enter_state () -> void:
-	animation.play("idle")
+func process_input(event: InputEvent) -> State:
+	if Input.is_action_just_pressed('ui_accept') and parent.is_on_floor():
+		return jump_state
+	if Input.is_action_just_pressed('ui_left') or Input.is_action_just_pressed('ui_right'):
+		return move_state
+	return null
+
+func process_physics(delta: float) -> State:
+	parent.velocity.y += gravity * delta
+	parent.move_and_slide()
 	
-
-func update (_delta: float) -> void:
-	if Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down") != Vector2.ZERO:
-		switch_state.emit(move_state)
-	elif Input.is_action_just_pressed("ui_accept"):
-		switch_state.emit(jump_state)
+	return null
