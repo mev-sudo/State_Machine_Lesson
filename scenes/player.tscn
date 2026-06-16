@@ -1,7 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://cqb20j8avswpc"]
+[gd_scene load_steps=35 format=3 uid="uid://cqb20j8avswpc"]
 
 [ext_resource type="Texture2D" uid="uid://d4frn6j58e06n" path="res://assets/sprites/knight.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dtcsvw7xdouc5" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://ccl2511i33ggg" path="res://scripts/state_machince/state_machine.gd" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://7yk7kmaj2swm" path="res://scripts/state_machince/state.gd" id="4_qlg0r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -229,7 +231,7 @@ position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_wqfne")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.27329817
+frame_progress = 0.17507182
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
@@ -237,3 +239,15 @@ shape = SubResource("CapsuleShape2D_wnwbv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+
+[node name="State_Machine" type="Node" parent="."]
+script = ExtResource("3_dqkch")
+metadata/_custom_type_script = "uid://ccl2511i33ggg"
+
+[node name="idle" type="Node" parent="State_Machine"]
+script = ExtResource("4_qlg0r")
+metadata/_custom_type_script = "uid://7yk7kmaj2swm"
+
+[node name="move" type="Node" parent="State_Machine"]
+script = ExtResource("4_qlg0r")
+metadata/_custom_type_script = "uid://7yk7kmaj2swm"
